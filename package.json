@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "start": "nodemon",
-    "bundle": "cpx src/**/* functions/bundle",
+    "bundle": "cpx 'src/**/*.{js,ts,json}' functions/bundle",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
