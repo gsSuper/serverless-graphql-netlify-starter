@@ -1,21 +1,9 @@
+const ApolloServer = require("apollo-server").ApolloServer;
+const ApolloServerLambda = require("apollo-server-lambda").ApolloServer;
+const { typeDefs } = require("./Schema/TypeDefs");
+const { resolvers } = require("./Schema/Resolvers");
 
-const ApolloServer = require('apollo-server').ApolloServer
-const ApolloServerLambda = require('apollo-server-lambda').ApolloServer
-const { gql } = require('apollo-server-lambda');
-
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: () => "Hi! Love from @stemmlerjs 🤠."
-  }
-};
-
-function createLambdaServer () {
+function createLambdaServer() {
   return new ApolloServerLambda({
     typeDefs,
     resolvers,
@@ -24,7 +12,7 @@ function createLambdaServer () {
   });
 }
 
-function createLocalServer () {
+function createLocalServer() {
   return new ApolloServer({
     typeDefs,
     resolvers,
@@ -33,4 +21,4 @@ function createLocalServer () {
   });
 }
 
-module.exports = { createLambdaServer, createLocalServer }
+module.exports = { createLambdaServer, createLocalServer };
