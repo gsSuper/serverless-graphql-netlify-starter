@@ -35,33 +35,35 @@ const resolvers = {
     },
     getAnnouncements: (parent, args) => {
       const { daoId, groupIds, filterBy, limit } = args;
-      return announcements
-        .filter((announcement) => groupIds.includes(announcement.groupId))
-        .sort((a, b) => {
-          switch (filterBy) {
-            case "newest":
-            default:
-              return new Date(a.createdAt).getTime() <
-                new Date(b.createdAt).getTime()
-                ? 1
-                : -1;
-            case "trending":
-              return new Date(a.updatedAt).getTime() <
-                new Date(b.updatedAt).getTime()
-                ? 1
-                : -1;
-            case "most_activity":
-              return a.replies < b.replies ? 1 : -1;
-          }
-        })
-        .slice(0, limit)
-        .map((item) => ({
-          ...item,
-          announcerAddress: item.announcer,
-          announcerAvatar: daoMembers.find(
-            (member) => member.address === item.announcer
-          ).avatar,
-        }));
+      return (
+        announcements
+          // .filter((announcement) => groupIds.includes(announcement.groupId))
+          .sort((a, b) => {
+            switch (filterBy) {
+              case "newest":
+              default:
+                return new Date(a.createdAt).getTime() <
+                  new Date(b.createdAt).getTime()
+                  ? 1
+                  : -1;
+              case "trending":
+                return new Date(a.updatedAt).getTime() <
+                  new Date(b.updatedAt).getTime()
+                  ? 1
+                  : -1;
+              case "most_activity":
+                return a.replies < b.replies ? 1 : -1;
+            }
+          })
+          .slice(0, limit)
+          .map((item) => ({
+            ...item,
+            announcerAddress: item.announcer,
+            announcerAvatar: daoMembers.find(
+              (member) => member.address === item.announcer
+            ).avatar,
+          }))
+      );
     },
     getProposals: (parent, args) => {
       const { daoId, groupIds } = args;
@@ -71,13 +73,11 @@ const resolvers = {
     },
     getVotes: (parent, args) => {
       const { daoId, groupIds } = args;
-      return votes.filter((vote) => groupIds.includes(vote.groupId));
+      return votes;
     },
     getTransactions: (parent, args) => {
       const { daoId, groupIds } = args;
-      return transactions.filter((transaction) =>
-        groupIds.includes(transaction.groupId)
-      );
+      return transactions;
     },
     getClaimStatus: (parent, args) => {
       const { daoId, groupIds } = args;
